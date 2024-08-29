@@ -21,8 +21,6 @@ pipeline{
         AWS_ECS_MEMORY = '2048'
         AWS_ECS_CLUSTER = 'shan-ecs-cluster'
         AWS_ECS_TASK_DEFINITION_PATH = './ecs-task-def/ecstaskdef.json'
-        AWS_ACCESS_KEY = 
-        AWS_SECRET_KEY = credentials('AWS_SECRET_KEY')
         AWS_ECR_REPOSITORY_URI = '121196576469.dkr.ecr.us-east-1.amazonaws.com/shan-ecs-ecr-repo'
         IMAGE_REPO_NAME = 'shan-ecs-ecr-repo'
         IMAGE_TAG = "v1"
@@ -30,12 +28,14 @@ pipeline{
     stage ('Building Image') {
         steps {
             script {
-                sh """/usr/local/bin/aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"""
-                dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-                sh """
-                      docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:${IMAGE_TAG}
-                      docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}
-                   """
+                withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY'), string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_KEY')]) {
+                    sh """/usr/local/bin/aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"""
+                    dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+                    sh """
+                        docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:${IMAGE_TAG}
+                        docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}
+                       """
+                }
             }
         }
     }
