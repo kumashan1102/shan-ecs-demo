@@ -24,6 +24,13 @@ pipeline{
         AWS_ECR_REPOSITORY_URI = '121196576469.dkr.ecr.us-east-1.amazonaws.com/shan-ecs-ecr-repo'
         IMAGE_REPO_NAME = 'shan-ecs-ecr-repo'
         IMAGE_TAG = "v1"
+        GIT_URL = 'https://github.com/kumashan1102/shan-ecs-demo.git'
+        GIT_BRANCH = 'main'
+    }
+    stage ('Fetch Files') {
+        steps {
+            git branch: ${GIT_BRANCH}, credentialsId: 'github_token', url: ${GIT_URL}
+        }
     }
     stage ('Building Image') {
         steps {
