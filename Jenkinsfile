@@ -30,7 +30,7 @@ pipeline{
     stages {
         stage ('Fetch Files') {
         steps {
-            git branch: ${GIT_BRANCH}, credentialsId: 'github_token', url: ${GIT_URL}
+            git branch: "${GIT_BRANCH}", credentialsId: 'github_token', url: "${GIT_URL}"
         }
     }
     stage ('Building Image') {
