@@ -25,26 +25,26 @@ pipeline{
         GIT_BRANCH = 'main'
     }
     stages {
-    stage ('Building Image') {
-        steps {
-            script {
-                withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY'), string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_KEY')]) {
-                    sh """/usr/local/bin/aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"""
-                    dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-                    sh """
+        stage ('Building Image') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY'), string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_KEY')]) {
+                        sh """aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"""
+                        dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+                        sh """
                         docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:${IMAGE_TAG}
                         docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}
                        """
+                    }
                 }
             }
         }
-    }
-    stage('Deploying') {
-        steps {
-            script {
-                sh """/usr/local/bin/aws ecs register-task-definition --cli-input-json file://ecs-task-def/ecstaskdef.json"""
-                def SERVICES = sh """/usr/local/bin/aws ecs describe-services --services ${AWS_ECS_SERVICE_NAME} --cluster ${AWS_ECS_CLUSTER} --region ${AWS_DEFAULT_REGION} | jq .failures[]"""
-                sh """
+        stage('Deploying') {
+            steps {
+                script {
+                    sh """/usr/local/bin/aws ecs register-task-definition --cli-input-json file://ecs-task-def/ecstaskdef.json"""
+                    def SERVICES = sh """/usr/local/bin/aws ecs describe-services --services ${AWS_ECS_SERVICE_NAME} --cluster ${AWS_ECS_CLUSTER} --region ${AWS_DEFAULT_REGION} | jq .failures[]"""
+                    sh """
                       if [ "$SERVICES" == "" ]; then
                           echo "entered existing service"
                           DESIRED_COUNT=`/usr/local/bin/aws ecs describe-services --services ${AWS_ECS_SERVICE_NAME} --cluster ${AWS_ECS_CLUSTER} --region ${AWS_DEFAULT_REGION} | jq .services[].desiredCount`
@@ -56,7 +56,7 @@ pipeline{
                           echo "entered new service"
                           /usr/local/bin/aws ecs create-service --service-name ${AWS_ECS_SERVICE_NAME} --desired-count 1 --task-definition ${AWS_ECS_TASK_DEFINITION} --cluster ${AWS_ECS_CLUSTER} --region ${AWS_DEFAULT_REGION}
                       fi
-                   """
+                      """
                 }
 
             }
