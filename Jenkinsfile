@@ -24,12 +24,6 @@ pipeline{
         GIT_URL = 'https://github.com/kumashan1102/shan-ecs-demo.git'
         GIT_BRANCH = 'main'
     }
-    stages {
-        stage ('Fetch Files') {
-        steps {
-            git branch: "${GIT_BRANCH}", credentialsId: 'github_token', url: "${GIT_URL}"
-        }
-    }
     stage ('Building Image') {
         steps {
             script {
