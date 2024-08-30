@@ -7,9 +7,6 @@ pipeline{
         retry(3)
         timestamps()
     }
-    tools {
-        dockerTool 'docker-latest'
-    }
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
         AWS_ACCOUNT_ID = '121196576469'
