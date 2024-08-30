@@ -23,6 +23,8 @@ pipeline{
         IMAGE_TAG = "v1"
         GIT_URL = 'https://github.com/kumashan1102/shan-ecs-demo.git'
         GIT_BRANCH = 'main'
+        AWS_ACCESS_KEY = credentials('AWS_ACCESS_KEY')
+        AWS_SECRET_KEY = credentials('AWS_SECRET_KEY')
     }
     stages {
         stage ('Building Image') {
