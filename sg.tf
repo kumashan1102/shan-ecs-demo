@@ -14,4 +14,5 @@ resource "aws_security_group_rule" "shan-ecs-alb-sg-rules" {
   to_port           = each.value.to_port
   security_group_id = aws_security_group.shan-ecs-alb.id
   protocol          = each.value.protocol
+  cidr_blocks       = each.value.cidr_blocks 
 }

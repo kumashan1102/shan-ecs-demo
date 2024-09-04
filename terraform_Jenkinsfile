@@ -4,7 +4,7 @@ pipeline{
         timeout(time: 1, unit: 'HOURS')
         buildDiscarder(logRotator(numToKeepStr: '10'))
         disableConcurrentBuilds()
-        retry(3)
+        retry(2)
         timestamps()
     }
     environment {
