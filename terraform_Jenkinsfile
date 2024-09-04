@@ -20,7 +20,7 @@ pipeline{
             steps {
                 script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'shan@121196576469', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh """terraform init -backend-config=${BACKEND_FILE_PATH}"""
+                        sh """terraform init"""
                     }
                 }
             }
