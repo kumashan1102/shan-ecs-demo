@@ -34,7 +34,7 @@ pipeline{
                 }
             }
         }
-        stage ('Terraform Plan') {
+        stage ('Terraform Apply') {
             steps {
                 script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'shan@121196576469', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
