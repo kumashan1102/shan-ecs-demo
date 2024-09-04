@@ -4,7 +4,6 @@ pipeline{
         timeout(time: 1, unit: 'HOURS')
         buildDiscarder(logRotator(numToKeepStr: '10'))
         disableConcurrentBuilds()
-        retry(2)
         timestamps()
     }
     environment {
@@ -38,7 +37,7 @@ pipeline{
             steps {
                 script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'shan@121196576469', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh """terraform apply"""
+                        sh """terraform apply -var-file=${TFVAR_PATH}"""
                     }
                 }
             }

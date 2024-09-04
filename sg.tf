@@ -8,7 +8,7 @@ resource "aws_security_group" "shan-ecs-alb" {
 }
 
 resource "aws_security_group_rule" "shan-ecs-alb-sg-rules" {
-  for_each          = [var.security_groups_rules]
+  for_each          = var.security_groups_rules
   type              = each.value.type
   from_port         = each.value.from_port
   to_port           = each.value.to_port
