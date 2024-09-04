@@ -37,10 +37,13 @@ pipeline{
             steps {
                 script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'shan@121196576469', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh """terraform apply -var-file=${TFVAR_PATH}"""
+                        sh """terraform apply -var-file=${TFVAR_PATH} -auto-approve"""
                     }
                 }
             }
+        }
+        stage ('Clean Workspace') {
+            cleanWs()
         }
     }
 }
