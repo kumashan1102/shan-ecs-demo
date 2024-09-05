@@ -35,7 +35,7 @@ data "aws_iam_policy_document" "shan-ecs-task-exec-policy" {
 
 resource "aws_iam_role_policy" "shan-ecs-task-exec-role-policy" {
   name = "shan-ecs-demo-task-exec-role-policy"
-  role = aws_iam_role.shan-ecs-task-exec-role.arn
+  role = aws_iam_role.shan-ecs-task-exec-role.name
   policy = data.aws_iam_policy_document.shan-ecs-task-exec-policy.json
 }
 
@@ -83,6 +83,6 @@ data "aws_iam_policy_document" "shan-ecs-task-iam-policy" {
 
 resource "aws_iam_role_policy" "shan-ecs-task-iam-role-policy" {
   name = "shan-ecs-demo-task-iam-role"
-  role = aws_iam_role.shan-ecs-task-iam-role.arn
+  role = aws_iam_role.shan-ecs-task-iam-role.name
   policy = data.aws_iam_policy_document.shan-ecs-task-iam-policy.json
 }

@@ -28,7 +28,7 @@ pipeline{
             steps {
                 script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'shan@121196576469', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh """terraform plan -var-file=${TFVAR_PATH}"""
+                        sh """terraform plan -var-file=${TFVAR_PATH} --destroy"""
                     }
                 }
             }
@@ -46,6 +46,11 @@ pipeline{
             steps{
                 cleanWs()
             }
+        }
+    }
+    post {
+        failure {
+            cleanWs()
         }
     }
 }
