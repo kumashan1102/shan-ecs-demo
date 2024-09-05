@@ -1,6 +1,6 @@
 data "aws_iam_policy_document" "shan-ecs-task-exec-trust-policy" {
   statement {
-    sid    = "shan-ecs-task-exec-trust-policy"
+    sid    = "shanecstaskexectrustpolicy"
     effect = "Allow"
     principals {
       type        = "Service"
@@ -42,7 +42,7 @@ resource "aws_iam_role_policy" "shan-ecs-task-exec-role-policy" {
 
 data "aws_iam_policy_document" "shan-ecs-task-iam-trust-policy" {
   statement {
-    sid    = "shan-ecs-task-exec-trust-policy"
+    sid    = "shanecstaskexectrustpolicy"
     effect = "Allow"
     principals {
       type        = "Service"
