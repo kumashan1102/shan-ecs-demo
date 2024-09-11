@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "shan-ecs-ecr-repo" {
 }
 
 resource "aws_ecs_cluster" "shan-ecs-cluster" {
-  name = "shan-ecs-cluster"
+  name = "shan-ecs-cluster-new"
   configuration {
     execute_command_configuration {
       logging = "OVERRIDE"
