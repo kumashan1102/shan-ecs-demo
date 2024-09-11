@@ -14,6 +14,7 @@ resource "aws_lb_target_group" "shan-ecs-alb-tg" {
   protocol = "HTTP"
   deregistration_delay = 10
   load_balancing_cross_zone_enabled = true
+  target_type = "ip"
   vpc_id = aws_vpc.shan-ecs-demo.id
 
   health_check {
