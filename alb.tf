@@ -16,18 +16,6 @@ resource "aws_lb_target_group" "shan-ecs-alb-tg" {
   load_balancing_cross_zone_enabled = true
   target_type = "ip"
   vpc_id = aws_vpc.shan-ecs-demo.id
-
-  health_check {
-    enabled = true
-    path = "/"
-    interval = 15
-    port = 80
-    protocol = "HTTP"
-    timeout = 10
-    unhealthy_threshold = 3
-    matcher = 200
-    healthy_threshold = 3
-  }
 }
 
 resource "aws_lb_listener" "shan-ecs-alb-listner" {
