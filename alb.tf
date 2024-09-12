@@ -25,7 +25,7 @@ resource "aws_lb_target_group" "shan-ecs-alb-tg" {
     protocol = "HTTP"
     timeout = 10
     unhealthy_threshold = 3
-    matcher = "OK"
+    matcher = "200"
     healthy_threshold = 3
   }
 }
