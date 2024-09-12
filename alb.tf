@@ -10,7 +10,7 @@ resource "aws_lb" "shan-ecs-alb" {
 
 resource "aws_lb_target_group" "shan-ecs-alb-tg" {
   name = "shan-ecs-alb-tg"
-  port = "3000"
+  port = "80"
   protocol = "HTTP"
   deregistration_delay = 10
   load_balancing_cross_zone_enabled = true
