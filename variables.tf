@@ -17,3 +17,8 @@ variable "security_groups_rules" {
   type    = map(any)
   default = null
 }
+
+variable "ecs_security_groups_rules" {
+  type    = map(any)
+  default = null
+}
