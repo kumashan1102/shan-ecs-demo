@@ -8,9 +8,9 @@ security_groups_rules = {
     }
     shan-alb-egress : {
         type = "egress"
-        from_port = 1-65535
-        to_port = 1-65535
-        protocol = "tcp"
+        from_port = 0
+        to_port = 0
+        protocol = -1
         cidr_blocks = ["0.0.0.0/0"]
     }
 }
@@ -31,9 +31,9 @@ ecs_security_groups_rules = {
     }
     shan-ecs-egress : {
         type = "egress"
-        from_port = 1-65535
-        to_port = 1-65535
-        protocol = "tcp"
+        from_port = 0
+        to_port = 0
+        protocol = -1
         cidr_blocks = ["0.0.0.0/0"]
     }
 }
