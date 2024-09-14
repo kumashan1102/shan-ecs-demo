@@ -35,7 +35,9 @@ pipeline{
         }
         stage ('Approval') {
             steps {
-                input message: 'Should we proceed to Deploy?', parameters: [choice(choices: ['APPROVED', 'REJECTED'], name: 'Approval_Request'), env.Approval_Request = "${params.Approval_Request}"]
+                script {
+                    env.Approval = input message: 'Should we proceed to Deploy?', parameters: [choice(choices: ['APPROVED', 'REJECTED'], name: 'Approval_Request')]
+                }
             }
         }
         stage ('Terraform Apply') {
