@@ -37,6 +37,7 @@ pipeline{
             steps {
                 script {
                     env.Approval = input message: 'Should we proceed to Deploy?', parameters: [choice(choices: ['APPROVED', 'REJECTED'], name: 'Approval_Request')]
+                    echo "Request has been ${Approval}"
                 }
             }
         }
