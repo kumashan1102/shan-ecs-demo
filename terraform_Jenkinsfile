@@ -33,7 +33,16 @@ pipeline{
                 }
             }
         }
+        stage ('Approval') {
+            steps {
+                input message: 'Should we proceed to Deploy?', parameters: [choice(choices: ['APPROVED', 'REJECTED'], name: 'Approval_Request')]
+                Approval_Request="${params.Approval_Request}"
+            }
+        }
         stage ('Terraform Apply') {
+            when {
+                environment name: 'Approval_Request', value: 'APPROVED'
+            }
             steps {
                 input message: 'Should we proceed to Deploy?', parameters: [choice(choices: ['APPROVED', 'REJECTED'], name: 'Approval_Request')]
                 when {
@@ -41,8 +50,6 @@ pipeline{
                         params.Approval_Request == 'APPROVED'
                     }
                 }
-            }
-            steps {
                 script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'shan@121196576469', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh """terraform apply -var-file=${TFVAR_PATH} -auto-approve"""
