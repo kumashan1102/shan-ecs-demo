@@ -42,7 +42,7 @@ pipeline{
         }
         stage ('Terraform Apply') {
             when {
-                environment name: 'Approval_Request', value: 'APPROVED'
+                environment name: 'Approval', value: 'APPROVED'
             }
             steps {
                 script {
