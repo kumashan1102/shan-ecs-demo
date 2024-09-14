@@ -34,6 +34,10 @@ pipeline{
             }
         }
         stage ('Terraform Apply') {
+            input message: 'Should we proceed to Deploy?', parameters: [choice(choices: ['APPROVED', 'REJECTED'], name: 'Approval_Request')]
+            when {
+                params.Approval_Request == 'APPROVED'
+            }
             steps {
                 script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'shan@121196576469', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
