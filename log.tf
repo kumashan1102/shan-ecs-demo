@@ -8,10 +8,19 @@ resource "aws_cloudwatch_log_group" "shan-ecs-cluster-log-group" {
 }
 
 resource "aws_cloudwatch_log_group" "shan-ecs-taskdef-log-group" {
-  name = "/ecs/fargate-node-task"
+  name = "/ecs/fargate-mongo-task"
   log_group_class = "STANDARD"
   retention_in_days = 30
   tags = {
-    Name = "/ecs/fargate-node-task"
+    Name = "/ecs/fargate-mongo-task"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "shan-ecs-taskdef-log-group2" {
+  name = "/ecs/fargate-backend-task"
+  log_group_class = "STANDARD"
+  retention_in_days = 30
+  tags = {
+    Name = "/ecs/fargate-backend-task"
   }
 }
