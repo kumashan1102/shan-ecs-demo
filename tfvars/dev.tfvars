@@ -29,6 +29,13 @@ ecs_security_groups_rules = {
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+    shan-ecs-ingress-three : {
+        type = "ingress"
+        from_port = 27017
+        to_port = 27017
+        protocol = "tcp"
+        cidr_blocks = ["10.1.0.0/24", "10.1.1.0/24", "10.1.2.0/24"]
+    }
     shan-ecs-egress : {
         type = "egress"
         from_port = 0

@@ -1,5 +1,5 @@
-resource "aws_ecr_repository" "shan-ecs-ecr-repo" {
-  name = "shan-ecs-ecr-repo"
+resource "aws_ecr_repository" "shan-multi-ecs-ecr-repo" {
+  name = "shan-multi-ecs-ecr-repo"
   image_tag_mutability = "MUTABLE"
   image_scanning_configuration {
     scan_on_push = false
