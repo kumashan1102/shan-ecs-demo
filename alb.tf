@@ -19,7 +19,7 @@ resource "aws_lb_target_group" "shan-ecs-alb-tg" {
 
   health_check {
     enabled = true
-    path = "/healthcheck"
+    path = "/goals"
     interval = 15
     port = 80
     protocol = "HTTP"
